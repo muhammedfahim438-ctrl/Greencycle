@@ -7,29 +7,53 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-  /* ── Reset & Variables ─────────────────────────────────────── */
+  /* ===== Foundation ===== */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:        #0d1117;
-    --surface:   #161b22;
-    --surface2:  #1c2430;
-    --border:    #2a3441;
-    --green:     #39d353;
-    --green-dim: #1a6b28;
-    --green-bg:  #0d2818;
-    --amber:     #f0a500;
-    --amber-bg:  #2a1f00;
-    --red:       #f85149;
-    --red-bg:    #2d0f0f;
-    --blue:      #58a6ff;
-    --blue-bg:   #0c2044;
-    --text:      #e6edf3;
-    --text-dim:  #7d8590;
-    --text-muted:#4d5566;
-    --radius:    10px;
-    --mono:      'Space Mono', monospace;
-    --sans:      'DM Sans', sans-serif;
+    --bg: #0f1724;
+    --surface: #172236;
+    --surface2: #1e2c44;
+    --surface3: #243652;
+    --border: #314763;
+    --text: #edf2f8;
+    --text-dim: #c1cfdf;
+    --text-muted: #8ba0bb;
+    --green: #5fd48f;
+    --green-dim: #2f8b58;
+    --green-bg: #17392a;
+    --amber: #f2b44e;
+    --amber-bg: #4a3918;
+    --red: #f37a7a;
+    --red-bg: #4f2424;
+    --blue: #7ab6ff;
+    --blue-bg: #183f6b;
+    --shadow: 0 10px 30px rgba(3, 10, 22, 0.35);
+    --radius: 14px;
+    --radius-sm: 10px;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  [data-theme="light"] {
+    --bg: #edf2f8;
+    --surface: #ffffff;
+    --surface2: #f7f9fc;
+    --surface3: #eef3f9;
+    --border: #d0dbe8;
+    --text: #142033;
+    --text-dim: #415066;
+    --text-muted: #5f6f86;
+    --green: #1f8b4c;
+    --green-dim: #16693a;
+    --green-bg: #e7f6ec;
+    --amber: #b36f00;
+    --amber-bg: #fff3db;
+    --red: #b92828;
+    --red-bg: #fdecec;
+    --blue: #165dba;
+    --blue-bg: #e9f1ff;
+    --shadow: 0 10px 24px rgba(14, 32, 63, 0.08);
   }
 
   html, body {
@@ -38,254 +62,298 @@
     color: var(--text);
     font-family: var(--sans);
     font-size: 15px;
+    line-height: 1.45;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Scrollbar ─────────────────────────────────────────────── */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  html[data-theme="light"], html[data-theme="light"] body { color-scheme: light; }
+  html[data-theme="dark"], html[data-theme="dark"] body { color-scheme: dark; }
 
-  /* ── Login Screen ──────────────────────────────────────────── */
+  :focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+
+  /* ===== Login ===== */
   #login-screen {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    padding: 28px 18px;
     background:
-      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(57,211,83,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 42% at 50% 0%, rgba(122, 182, 255, 0.12) 0%, transparent 70%),
+      linear-gradient(to bottom, rgba(31, 139, 76, 0.12), transparent 38%),
       var(--bg);
   }
 
-  .login-box {
-    width: 100%;
-    max-width: 380px;
-  }
-
-  .login-logo {
-    text-align: center;
-    margin-bottom: 40px;
-  }
+  .login-box { width: 100%; max-width: 420px; }
+  .login-logo { text-align: center; margin-bottom: 26px; }
 
   .login-logo .icon {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     background: var(--green-bg);
     border: 1px solid var(--green-dim);
-    border-radius: 14px;
+    border-radius: 16px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 30px;
     margin-bottom: 14px;
   }
 
   .login-logo h1 {
     font-family: var(--mono);
-    font-size: 20px;
-    color: var(--green);
-    letter-spacing: -0.5px;
+    font-size: 22px;
+    color: var(--text);
+    letter-spacing: -0.4px;
   }
 
-  .login-logo p {
-    color: var(--text-dim);
-    font-size: 13px;
-    margin-top: 4px;
-  }
+  .login-logo p { color: var(--text-dim); font-size: 13px; margin-top: 6px; }
 
   .login-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px;
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
   }
 
   .tab-toggle {
-    display: flex;
-    background: var(--bg);
-    border-radius: 8px;
-    padding: 3px;
-    margin-bottom: 24px;
-    gap: 3px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+    margin-bottom: 22px;
+    gap: 4px;
   }
 
   .tab-toggle button {
-    flex: 1;
-    padding: 8px;
     border: none;
     background: transparent;
     color: var(--text-dim);
     font-family: var(--sans);
     font-size: 13px;
-    font-weight: 500;
-    border-radius: 6px;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 10px 8px;
     cursor: pointer;
-    transition: all .15s;
+    transition: all .18s;
   }
 
   .tab-toggle button.active {
-    background: var(--surface2);
+    background: var(--surface);
     color: var(--text);
+    box-shadow: 0 2px 8px rgba(18, 28, 45, 0.14);
   }
 
-  .field { margin-bottom: 16px; }
+  .field { margin-bottom: 15px; }
 
   .field label {
     display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-dim);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: .6px;
-    margin-bottom: 6px;
+    letter-spacing: 0.8px;
+    margin-bottom: 7px;
   }
 
   .field input, .field select {
     width: 100%;
-    background: var(--bg);
+    background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 11px 14px;
+    border-radius: 10px;
+    padding: 11px 12px;
     color: var(--text);
-    font-family: var(--mono);
     font-size: 14px;
     outline: none;
-    transition: border-color .15s;
+    transition: all .18s;
+    appearance: none;
     -webkit-appearance: none;
   }
 
-  .field select {
-    font-family: var(--sans);
-    cursor: pointer;
-  }
-
-  .field input:focus, .field select:focus {
-    border-color: var(--green-dim);
-  }
+  .field input { font-family: var(--mono); }
+  .field select { font-family: var(--sans); cursor: pointer; }
+  .field input:focus, .field select:focus { border-color: var(--blue); background: var(--surface); }
 
   .btn-primary {
     width: 100%;
-    padding: 13px;
-    background: var(--green);
-    color: #000;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, var(--green), #88d5aa);
+    color: #052010;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-family: var(--sans);
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.2px;
     cursor: pointer;
-    transition: opacity .15s, transform .1s;
-    margin-top: 8px;
+    transition: transform .12s, opacity .18s;
+    margin-top: 6px;
   }
 
-  .btn-primary:hover { opacity: .9; }
-  .btn-primary:active { transform: scale(.98); }
-  .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+  .btn-primary:hover { opacity: .94; }
+  .btn-primary:active { transform: translateY(1px); }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
 
   .error-msg {
+    display: none;
+    margin-top: 12px;
     background: var(--red-bg);
     border: 1px solid var(--red);
     color: var(--red);
-    border-radius: 7px;
+    border-radius: 9px;
     padding: 10px 12px;
     font-size: 13px;
-    margin-top: 12px;
-    display: none;
   }
 
   .demo-hint {
-    margin-top: 20px;
+    margin-top: 16px;
     background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 12px 14px;
   }
 
   .demo-hint p {
-    font-size: 12px;
-    color: var(--text-dim);
+    font-size: 11px;
+    color: var(--text-muted);
     margin-bottom: 6px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: .5px;
+    letter-spacing: .7px;
   }
 
   .demo-hint code {
     font-family: var(--mono);
     font-size: 11px;
-    color: var(--green);
+    color: var(--text-dim);
     display: block;
-    line-height: 1.8;
+    line-height: 1.85;
   }
 
-  /* ── App Shell ─────────────────────────────────────────────── */
+  /* ===== App Shell ===== */
   #app-screen {
     display: none;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
   }
 
-  /* Top Bar */
   .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 60;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
-    height: 56px;
-    background: var(--surface);
+    gap: 10px;
+    padding: 12px 18px;
+    background: color-mix(in oklab, var(--surface) 92%, transparent);
     border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
+    backdrop-filter: blur(8px);
   }
 
   .topbar-brand {
     font-family: var(--mono);
     font-size: 14px;
-    color: var(--green);
-    letter-spacing: -0.3px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.2px;
   }
 
   .topbar-user {
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
+  }
+
+  .user-phone {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 10px;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .theme-toggle-btn {
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    border-radius: 999px;
+    padding: 7px 11px;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .18s;
+  }
+
+  .theme-toggle-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+  .floating-theme-toggle {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 300;
   }
 
   .role-badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 5px 9px;
+    border-radius: 999px;
     text-transform: uppercase;
-    letter-spacing: .5px;
+    letter-spacing: .7px;
+    border: 1px solid transparent;
   }
 
-  .role-badge.admin  { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber); }
-  .role-badge.citizen{ background: var(--green-bg); color: var(--green);  border: 1px solid var(--green-dim); }
-  .role-badge.worker { background: var(--blue-bg);  color: var(--blue);   border: 1px solid var(--blue); }
+  .role-badge.admin  { background: var(--amber-bg); color: var(--amber); border-color: var(--amber); }
+  .role-badge.citizen{ background: var(--green-bg); color: var(--green); border-color: var(--green-dim); }
+  .role-badge.worker { background: var(--blue-bg); color: var(--blue); border-color: var(--blue); }
 
-  /* Content */
   .content-area {
     flex: 1;
     overflow-y: auto;
-    padding: 20px 20px 100px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 16px 106px;
   }
 
-  /* Tab Pages */
-  .tab-page { display: none; }
+  .tab-page { display: none; animation: fadeIn .2s ease; }
   .tab-page.active { display: block; }
 
-  /* Bottom Nav */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(2px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--surface);
+    background: color-mix(in oklab, var(--surface) 95%, transparent);
     border-top: 1px solid var(--border);
     display: flex;
     padding: 8px 0 max(8px, env(safe-area-inset-bottom));
     z-index: 100;
+    backdrop-filter: blur(8px);
   }
 
   .nav-btn {
@@ -293,84 +361,94 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    padding: 6px 4px;
+    justify-content: center;
+    gap: 2px;
+    padding: 8px 4px;
     border: none;
     background: transparent;
     color: var(--text-muted);
     cursor: pointer;
-    transition: color .15s;
+    transition: all .15s;
     font-size: 10px;
     font-family: var(--sans);
-    font-weight: 500;
+    font-weight: 700;
   }
 
-  .nav-btn .nav-icon { font-size: 20px; line-height: 1; }
-  .nav-btn.active { color: var(--green); }
+  .nav-btn .nav-icon { font-size: 18px; line-height: 1; }
+  .nav-btn.active { color: var(--blue); }
   .nav-btn:hover { color: var(--text-dim); }
 
-  /* ── Shared Components ─────────────────────────────────────── */
+  /* ===== Shared Components ===== */
   .page-title {
     font-family: var(--mono);
-    font-size: 18px;
+    font-size: 21px;
     color: var(--text);
-    margin-bottom: 20px;
-    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+    letter-spacing: -0.4px;
   }
 
-  .card {
+  .card, .stat-card, .form-card, .list-item {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .card {
     padding: 18px;
     margin-bottom: 12px;
   }
 
+  .card-highlight {
+    background: linear-gradient(135deg, var(--green-bg) 0%, var(--surface) 95%);
+    border-color: var(--green-dim);
+  }
+
   .card-label {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: .6px;
+    letter-spacing: .8px;
     color: var(--text-muted);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .card-value {
     font-family: var(--mono);
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
     color: var(--text);
   }
 
   .card-value.green { color: var(--green); }
   .card-value.amber { color: var(--amber); }
-  .card-value.red   { color: var(--red); }
+  .card-value.red { color: var(--red); }
 
   .stat-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
   }
 
   .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
+    padding: 16px;
     text-align: center;
   }
 
-  .stat-card .label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
-  .stat-card .value { font-family: var(--mono); font-size: 20px; font-weight: 700; }
-
-  /* Forms */
-  .form-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
+  .stat-card .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    font-weight: 700;
   }
+
+  .stat-card .value { font-family: var(--mono); font-size: 24px; font-weight: 700; color: var(--text); }
+  .stat-card .value.green { color: var(--green); }
+
+  .form-card { padding: 20px; }
 
   .weight-input {
     display: flex;
@@ -381,32 +459,19 @@
   }
 
   .weight-input:last-of-type { border-bottom: none; }
-
-  .weight-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .weight-dot.food    { background: var(--green); }
+  .weight-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .weight-dot.food { background: var(--green); }
   .weight-dot.plastic { background: var(--blue); }
-  .weight-dot.other   { background: var(--text-muted); }
-
-  .weight-label { flex: 1; font-size: 14px; font-weight: 500; }
+  .weight-dot.other { background: var(--text-muted); }
+  .weight-label { flex: 1; font-size: 14px; font-weight: 700; }
   .weight-sublabel { font-size: 11px; color: var(--text-muted); }
 
-  .weight-field {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
+  .weight-field { display: flex; align-items: center; gap: 4px; }
   .weight-field input {
-    width: 80px;
-    background: var(--bg);
+    width: 84px;
+    background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 8px 10px;
     color: var(--text);
     font-family: var(--mono);
@@ -415,16 +480,47 @@
     outline: none;
   }
 
-  .weight-field input:focus { border-color: var(--green-dim); }
+  .weight-field input:focus { border-color: var(--blue); }
   .weight-field span { font-size: 12px; color: var(--text-dim); }
 
-  /* List Items */
-  .list-item {
-    background: var(--surface);
+  .estimator-row {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .estimator-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  .estimator-value {
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--green);
+  }
+
+  .hint-box {
+    margin-top: 14px;
+    background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+
+  .list-item {
     padding: 14px 16px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -432,63 +528,66 @@
   }
 
   .list-item-left { flex: 1; min-width: 0; }
-  .list-item-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-  .list-item-meta  { font-size: 12px; color: var(--text-dim); font-family: var(--mono); }
+  .list-item-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .list-item-title.compact { font-size: 13px; line-height: 1.6; }
+  .list-item-meta { font-size: 12px; color: var(--text-dim); font-family: var(--mono); }
 
   .badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 9px;
+    border-radius: 999px;
     white-space: nowrap;
     flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    border: 1px solid transparent;
   }
 
-  .badge.approved   { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-dim); }
-  .badge.pending    { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber); }
-  .badge.paid       { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-dim); }
-  .badge.due        { background: var(--red-bg);    color: var(--red);    border: 1px solid var(--red); }
-  .badge.scheduled  { background: var(--blue-bg);   color: var(--blue);   border: 1px solid var(--blue); }
-  .badge.collected  { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-dim); }
+  .badge.approved, .badge.paid, .badge.collected { background: var(--green-bg); color: var(--green); border-color: var(--green-dim); }
+  .badge.pending { background: var(--amber-bg); color: var(--amber); border-color: var(--amber); }
+  .badge.due { background: var(--red-bg); color: var(--red); border-color: var(--red); }
+  .badge.scheduled { background: var(--blue-bg); color: var(--blue); border-color: var(--blue); }
 
   .btn-sm {
-    padding: 7px 14px;
-    border-radius: 7px;
+    padding: 8px 14px;
+    border-radius: 8px;
     border: none;
     font-family: var(--sans);
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: opacity .15s;
     white-space: nowrap;
   }
 
-  .btn-sm:hover { opacity: .85; }
-  .btn-sm.green { background: var(--green); color: #000; }
-  .btn-sm.red   { background: var(--red);   color: #fff; }
-  .btn-sm.blue  { background: var(--blue);  color: #000; }
+  .btn-sm:hover { opacity: .88; }
+  .btn-sm.green { background: var(--green); color: #032010; }
+  .btn-sm.red { background: var(--red); color: #fff; }
+  .btn-sm.blue { background: var(--blue); color: #041937; }
+  .btn-submit { padding: 10px 22px; font-size: 14px; }
 
-  /* Empty State */
   .empty-state {
     text-align: center;
-    padding: 48px 20px;
+    padding: 42px 20px;
     color: var(--text-muted);
+    background: var(--surface2);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
   }
 
-  .empty-state .icon { font-size: 36px; margin-bottom: 12px; }
+  .empty-state .icon { font-size: 34px; margin-bottom: 10px; }
   .empty-state p { font-size: 14px; }
 
-  /* Dividers / Section labels */
   .section-label {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: .6px;
+    letter-spacing: .9px;
     color: var(--text-muted);
     margin: 20px 0 10px;
   }
 
-  /* Profile */
   .profile-info {
     display: flex;
     align-items: center;
@@ -497,8 +596,8 @@
   }
 
   .avatar {
-    width: 56px;
-    height: 56px;
+    width: 58px;
+    height: 58px;
     background: var(--green-bg);
     border: 2px solid var(--green-dim);
     border-radius: 50%;
@@ -511,11 +610,30 @@
 
   .profile-name {
     font-family: var(--mono);
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
     color: var(--text);
     margin-bottom: 4px;
   }
+
+  .profile-metadata {
+    display: grid;
+    gap: 10px;
+  }
+
+  .info-row {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .info-row .label { font-size: 13px; color: var(--text-dim); }
+  .info-row .value { font-family: var(--mono); font-size: 13px; color: var(--text); }
+  .info-row .value.cap { text-transform: capitalize; }
 
   .btn-danger {
     width: 100%;
@@ -523,48 +641,73 @@
     background: transparent;
     color: var(--red);
     border: 1px solid var(--red);
-    border-radius: 8px;
+    border-radius: 10px;
     font-family: var(--sans);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: background .15s;
-    margin-top: 8px;
+    margin-top: 10px;
   }
 
   .btn-danger:hover { background: var(--red-bg); }
 
-  /* Success toast */
+  .admin-note {
+    background: var(--amber-bg);
+    border: 1px solid var(--amber);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--amber);
+  }
+
+  .state-loading {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+  }
+
+  .error-card {
+    background: var(--red-bg);
+    border: 1px solid var(--red);
+    border-radius: 10px;
+    padding: 14px;
+    color: var(--red);
+    font-size: 13px;
+  }
+
   #toast {
     position: fixed;
-    bottom: 80px;
+    bottom: 86px;
     left: 50%;
-    transform: translateX(-50%) translateY(20px);
+    transform: translateX(-50%) translateY(18px);
     background: var(--surface);
-    border: 1px solid var(--green);
+    border: 1px solid var(--green-dim);
     color: var(--green);
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 10px 18px;
+    border-radius: 999px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 700;
     opacity: 0;
-    transition: all .3s;
+    transition: all .24s;
     pointer-events: none;
-    z-index: 200;
+    z-index: 220;
     white-space: nowrap;
+    box-shadow: var(--shadow);
   }
 
-  #toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* Loading spinner */
   .spinner {
     display: inline-block;
-    width: 16px; height: 16px;
+    width: 16px;
+    height: 16px;
     border: 2px solid var(--border);
-    border-top-color: var(--green);
+    border-top-color: var(--blue);
     border-radius: 50%;
     animation: spin .7s linear infinite;
     vertical-align: middle;
@@ -573,13 +716,23 @@
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Responsive tweaks */
-  @media(max-width: 400px) {
+  @media (max-width: 768px) {
+    .topbar-brand { font-size: 12px; }
+    .user-phone { display: none; }
+  }
+
+  @media (max-width: 420px) {
     .stat-grid { grid-template-columns: 1fr; }
+    .content-area { padding-inline: 12px; }
+    .page-title { font-size: 18px; }
   }
 </style>
 
 <body>
+
+<button id="theme-toggle" class="theme-toggle-btn floating-theme-toggle" onclick="toggleTheme()" aria-label="Toggle color theme">
+  🌙 Dark
+</button>
 
 <!-- ════════════════ LOGIN SCREEN ════════════════ -->
 <div id="login-screen">
@@ -592,8 +745,8 @@
 
     <div class="login-card">
       <div class="tab-toggle">
-        <button class="active" onclick="switchAuthTab('login')">Sign In</button>
-        <button onclick="switchAuthTab('register')">Register</button>
+        <button class="active" onclick="switchAuthTab('login')" aria-label="Open sign in form">Sign In</button>
+        <button onclick="switchAuthTab('register')" aria-label="Open registration form">Register</button>
       </div>
 
       <!-- Login Form -->
@@ -650,19 +803,19 @@
   <div class="topbar">
     <span class="topbar-brand">♻ GreenCycle</span>
     <div class="topbar-user">
-      <span id="topbar-phone" style="font-size:13px; color:var(--text-dim); font-family:var(--mono)"></span>
+      <span id="topbar-phone" class="user-phone"></span>
       <span id="topbar-role" class="role-badge"></span>
     </div>
   </div>
 
   <!-- Content -->
-  <div class="content-area">
+  <main class="content-area" role="main">
 
     <!-- ── Dashboard ── -->
     <div class="tab-page active" id="page-dashboard">
       <div class="page-title">Dashboard</div>
 
-      <div class="card" style="background: linear-gradient(135deg, var(--green-bg) 0%, var(--surface) 100%); border-color: var(--green-dim);">
+      <div class="card card-highlight">
         <div class="card-label">Total Amount Due</div>
         <div class="card-value green" id="dash-total-due">₹0.00</div>
       </div>
@@ -720,17 +873,17 @@
           </div>
         </div>
 
-        <div style="margin-top:18px; padding-top:16px; border-top: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+        <div class="estimator-row">
           <div>
-            <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.6px; margin-bottom:4px;">Est. Charge</div>
-            <div style="font-family:var(--mono); font-size:22px; color:var(--green)" id="est-charge">₹0.00</div>
+            <div class="estimator-label">Est. Charge</div>
+            <div class="estimator-value" id="est-charge">₹0.00</div>
           </div>
-          <button class="btn-sm green" style="padding:10px 22px; font-size:14px;" onclick="submitWaste()">Submit Entry</button>
+          <button class="btn-sm green btn-submit" onclick="submitWaste()">Submit Entry</button>
         </div>
       </div>
 
-      <div style="margin-top:14px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
-        <p style="font-size:12px; color:var(--text-dim);">⚠ Entry will be pending admin approval before payment is generated.</p>
+      <div class="hint-box">
+        <p>⚠ Entry will be pending admin approval before payment is generated.</p>
       </div>
     </div>
 
@@ -757,14 +910,14 @@
             <span id="prof-role-badge" class="role-badge">—</span>
           </div>
         </div>
-        <div style="display:grid; gap:10px;">
-          <div style="background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:12px 14px; display:flex; justify-content:space-between;">
-            <span style="font-size:13px; color:var(--text-dim);">User ID</span>
-            <span style="font-family:var(--mono); font-size:13px;" id="prof-id">—</span>
+        <div class="profile-metadata">
+          <div class="info-row">
+            <span class="label">User ID</span>
+            <span class="value" id="prof-id">—</span>
           </div>
-          <div style="background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:12px 14px; display:flex; justify-content:space-between;">
-            <span style="font-size:13px; color:var(--text-dim);">Role</span>
-            <span style="font-family:var(--mono); font-size:13px; text-transform:capitalize;" id="prof-role-text">—</span>
+          <div class="info-row">
+            <span class="label">Role</span>
+            <span class="value cap" id="prof-role-text">—</span>
           </div>
         </div>
       </div>
@@ -779,34 +932,34 @@
     <div class="tab-page" id="page-admin">
       <div class="page-title">Admin Panel</div>
 
-      <div style="background:var(--amber-bg); border:1px solid var(--amber); border-radius:8px; padding:12px 14px; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+      <div class="admin-note">
         <span>⚡</span>
-        <span style="font-size:13px; color:var(--amber);">Approve entries to auto-generate payments for citizens.</span>
+        <span>Approve entries to auto-generate payments for citizens.</span>
       </div>
 
       <div id="pending-list"></div>
     </div>
 
-  </div><!-- end content-area -->
+  </main><!-- end content-area -->
 
   <!-- Bottom Nav -->
   <nav class="bottom-nav" id="bottom-nav">
-    <button class="nav-btn active" data-tab="dashboard" onclick="switchTab('dashboard')">
+    <button class="nav-btn active" data-tab="dashboard" onclick="switchTab('dashboard')" aria-label="Open dashboard tab">
       <span class="nav-icon">📊</span>Dashboard
     </button>
-    <button class="nav-btn" data-tab="log" onclick="switchTab('log')">
+    <button class="nav-btn" data-tab="log" onclick="switchTab('log')" aria-label="Open waste logging tab">
       <span class="nav-icon">📝</span>Log
     </button>
-    <button class="nav-btn" data-tab="history" onclick="switchTab('history')">
+    <button class="nav-btn" data-tab="history" onclick="switchTab('history')" aria-label="Open history tab">
       <span class="nav-icon">📋</span>History
     </button>
-    <button class="nav-btn" data-tab="schedule" onclick="switchTab('schedule')">
+    <button class="nav-btn" data-tab="schedule" onclick="switchTab('schedule')" aria-label="Open pickup schedule tab">
       <span class="nav-icon">📅</span>Schedule
     </button>
-    <button class="nav-btn" data-tab="profile" onclick="switchTab('profile')">
+    <button class="nav-btn" data-tab="profile" onclick="switchTab('profile')" aria-label="Open profile tab">
       <span class="nav-icon">👤</span>Profile
     </button>
-    <button class="nav-btn" data-tab="admin" onclick="switchTab('admin')" id="admin-nav-btn" style="display:none">
+    <button class="nav-btn" data-tab="admin" onclick="switchTab('admin')" id="admin-nav-btn" style="display:none" aria-label="Open admin tab">
       <span class="nav-icon">🔐</span>Admin
     </button>
   </nav>
@@ -818,9 +971,30 @@
 <script>
 // ── Config ──────────────────────────────────────────────────────────────
 const API_BASE = 'http://127.0.0.1:5000';
+const THEME_KEY = 'gc_theme';
 
 // ── State ───────────────────────────────────────────────────────────────
 let currentUser = null;
+
+// ── Theme ────────────────────────────────────────────────────────────────
+function getPreferredTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'light' || saved === 'dark') return saved;
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+function applyTheme(theme) {
+  const mode = theme === 'light' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', mode);
+  localStorage.setItem(THEME_KEY, mode);
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.textContent = mode === 'light' ? '☀️ Light' : '🌙 Dark';
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(current === 'light' ? 'dark' : 'light');
+}
 
 // ── API wrapper ─────────────────────────────────────────────────────────
 async function api(method, path, body) {
@@ -1056,7 +1230,7 @@ async function submitWaste() {
 // ── History ───────────────────────────────────────────────────────────────
 async function loadHistory() {
   const el = document.getElementById('history-list');
-  el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted)"><span class="spinner"></span></div>';
+  el.innerHTML = '<div class="state-loading"><span class="spinner"></span></div>';
   try {
     const data = await api('GET', '/history/' + currentUser.id);
     if (!data.length) {
@@ -1065,7 +1239,7 @@ async function loadHistory() {
       el.innerHTML = data.map(e => `
         <div class="list-item">
           <div class="list-item-left">
-            <div class="list-item-title" style="font-size:13px; line-height:1.6">
+            <div class="list-item-title compact">
               🟢 Food: <b>${e.food}kg</b> &nbsp; 🔵 Plastic: <b>${e.plastic}kg</b> &nbsp; ⚪ Other: <b>${e.other}kg</b>
             </div>
             <div class="list-item-meta">${e.date} · ₹${e.amount.toFixed(2)}</div>
@@ -1081,7 +1255,7 @@ async function loadHistory() {
 // ── Schedule ──────────────────────────────────────────────────────────────
 async function loadSchedule() {
   const el = document.getElementById('schedule-list');
-  el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted)"><span class="spinner"></span></div>';
+  el.innerHTML = '<div class="state-loading"><span class="spinner"></span></div>';
   try {
     const data = await api('GET', '/schedule/' + currentUser.id);
     if (!data.length) {
@@ -1104,11 +1278,11 @@ async function loadSchedule() {
 // ── Profile / Payments ────────────────────────────────────────────────────
 async function loadProfile() {
   const el = document.getElementById('profile-payments');
-  el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted)"><span class="spinner"></span></div>';
+  el.innerHTML = '<div class="state-loading"><span class="spinner"></span></div>';
   try {
     const data = await api('GET', '/payments/' + currentUser.id);
     if (!data.payments.length) {
-      el.innerHTML = '<div class="empty-state" style="padding:24px 0"><div class="icon">💳</div><p>No payments yet.</p></div>';
+      el.innerHTML = '<div class="empty-state"><div class="icon">💳</div><p>No payments yet.</p></div>';
     } else {
       el.innerHTML = data.payments.map(p => `
         <div class="list-item">
@@ -1127,7 +1301,7 @@ async function loadProfile() {
 // ── Admin: Pending ────────────────────────────────────────────────────────
 async function loadPending() {
   const el = document.getElementById('pending-list');
-  el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted)"><span class="spinner"></span></div>';
+  el.innerHTML = '<div class="state-loading"><span class="spinner"></span></div>';
   try {
     const data = await api('GET', '/pending');
     if (!data.length) {
@@ -1136,7 +1310,7 @@ async function loadPending() {
       el.innerHTML = data.map(e => `
         <div class="list-item" id="pending-${e.id}">
           <div class="list-item-left">
-            <div class="list-item-title" style="font-size:13px; line-height:1.6">
+            <div class="list-item-title compact">
               📱 ${e.phone}<br>
               🟢 ${e.food}kg · 🔵 ${e.plastic}kg · ⚪ ${e.other}kg
             </div>
@@ -1167,13 +1341,14 @@ async function approveEntry(id) {
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 function errorCard(msg) {
-  return `<div style="background:var(--red-bg);border:1px solid var(--red);border-radius:8px;padding:14px;color:var(--red);font-size:13px;">
+  return `<div class="error-card">
     ⚠ ${msg}. Is the backend running?
   </div>`;
 }
 
 // ── Boot ──────────────────────────────────────────────────────────────────
 (function boot() {
+  applyTheme(getPreferredTheme());
   const token = localStorage.getItem('gc_token');
   if (token) {
     initApp();
