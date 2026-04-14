@@ -431,6 +431,78 @@
     margin-bottom: 14px;
   }
 
+  .viz-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .viz-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+  }
+
+  .viz-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .viz-kpi {
+    font-family: var(--mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+
+  .meter {
+    height: 10px;
+    border-radius: 999px;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .meter-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+    transition: width .3s ease;
+  }
+
+  .mix-row {
+    display: grid;
+    grid-template-columns: 74px 1fr 54px;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  .mix-label { color: var(--text-dim); font-weight: 700; }
+
+  .mix-track {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .mix-fill { width: 0%; height: 100%; transition: width .3s ease; }
+  .mix-fill.food { background: var(--green); }
+  .mix-fill.plastic { background: var(--blue); }
+  .mix-fill.other { background: var(--text-muted); }
+  .mix-value { text-align: right; color: var(--text-dim); font-family: var(--mono); }
+
   .stat-card {
     padding: 16px;
     text-align: center;
@@ -449,6 +521,48 @@
   .stat-card .value.green { color: var(--green); }
 
   .form-card { padding: 20px; }
+
+  .waste-model-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .waste-model {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .waste-model-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .waste-model-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .waste-model-icon.food { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-dim); }
+  .waste-model-icon.plastic { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue); }
+  .waste-model-icon.other { background: var(--surface3); color: var(--text-dim); border: 1px solid var(--border); }
+
+  .waste-model-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .waste-model-rate { font-size: 11px; color: var(--text-muted); }
 
   .weight-input {
     display: flex;
@@ -723,6 +837,7 @@
 
   @media (max-width: 420px) {
     .stat-grid { grid-template-columns: 1fr; }
+    .mix-row { grid-template-columns: 64px 1fr 48px; }
     .content-area { padding-inline: 12px; }
     .page-title { font-size: 18px; }
   }
@@ -831,6 +946,32 @@
         </div>
       </div>
 
+      <div class="viz-grid">
+        <div class="viz-card">
+          <div class="viz-title">Approval Rate</div>
+          <div class="viz-kpi" id="dash-approval-rate">0%</div>
+          <div class="meter"><div class="meter-fill" id="dash-approval-fill"></div></div>
+        </div>
+        <div class="viz-card">
+          <div class="viz-title">Waste Composition</div>
+          <div class="mix-row">
+            <span class="mix-label">Food</span>
+            <div class="mix-track"><div class="mix-fill food" id="dash-food-fill"></div></div>
+            <span class="mix-value" id="dash-food-val">0%</span>
+          </div>
+          <div class="mix-row">
+            <span class="mix-label">Plastic</span>
+            <div class="mix-track"><div class="mix-fill plastic" id="dash-plastic-fill"></div></div>
+            <span class="mix-value" id="dash-plastic-val">0%</span>
+          </div>
+          <div class="mix-row">
+            <span class="mix-label">Other</span>
+            <div class="mix-track"><div class="mix-fill other" id="dash-other-fill"></div></div>
+            <span class="mix-value" id="dash-other-val">0%</span>
+          </div>
+        </div>
+      </div>
+
       <div class="section-label">Recent Activity</div>
       <div id="dash-recent"></div>
     </div>
@@ -839,37 +980,45 @@
     <div class="tab-page" id="page-log">
       <div class="page-title">Log Waste</div>
       <div class="form-card">
-        <div class="weight-input">
-          <div class="weight-dot food"></div>
-          <div>
-            <div class="weight-label">Food Waste</div>
-            <div class="weight-sublabel">₹2 per kg</div>
+        <div class="waste-model-grid">
+          <div class="waste-model">
+            <div class="waste-model-left">
+              <span class="waste-model-icon food">F</span>
+              <div>
+                <div class="waste-model-title">Food Waste</div>
+                <div class="waste-model-rate">Rate: ₹2 per kg</div>
+              </div>
+            </div>
+            <div class="weight-field">
+              <input type="number" id="w-food" min="0" step="0.1" placeholder="0.0"/>
+              <span>kg</span>
+            </div>
           </div>
-          <div class="weight-field">
-            <input type="number" id="w-food" min="0" step="0.1" placeholder="0.0"/>
-            <span>kg</span>
+          <div class="waste-model">
+            <div class="waste-model-left">
+              <span class="waste-model-icon plastic">P</span>
+              <div>
+                <div class="waste-model-title">Plastic</div>
+                <div class="waste-model-rate">Rate: ₹3 per kg</div>
+              </div>
+            </div>
+            <div class="weight-field">
+              <input type="number" id="w-plastic" min="0" step="0.1" placeholder="0.0"/>
+              <span>kg</span>
+            </div>
           </div>
-        </div>
-        <div class="weight-input">
-          <div class="weight-dot plastic"></div>
-          <div>
-            <div class="weight-label">Plastic</div>
-            <div class="weight-sublabel">₹3 per kg</div>
-          </div>
-          <div class="weight-field">
-            <input type="number" id="w-plastic" min="0" step="0.1" placeholder="0.0"/>
-            <span>kg</span>
-          </div>
-        </div>
-        <div class="weight-input">
-          <div class="weight-dot other"></div>
-          <div>
-            <div class="weight-label">Other</div>
-            <div class="weight-sublabel">₹1 per kg</div>
-          </div>
-          <div class="weight-field">
-            <input type="number" id="w-other" min="0" step="0.1" placeholder="0.0"/>
-            <span>kg</span>
+          <div class="waste-model">
+            <div class="waste-model-left">
+              <span class="waste-model-icon other">O</span>
+              <div>
+                <div class="waste-model-title">Other</div>
+                <div class="waste-model-rate">Rate: ₹1 per kg</div>
+              </div>
+            </div>
+            <div class="weight-field">
+              <input type="number" id="w-other" min="0" step="0.1" placeholder="0.0"/>
+              <span>kg</span>
+            </div>
           </div>
         </div>
 
@@ -1176,7 +1325,26 @@ async function loadDashboard() {
 
     document.getElementById('dash-total-due').textContent = '₹' + payData.total_due.toFixed(2);
     document.getElementById('dash-entries').textContent   = histData.length;
-    document.getElementById('dash-approved').textContent  = histData.filter(e => e.approved).length;
+    const approvedCount = histData.filter(e => e.approved).length;
+    document.getElementById('dash-approved').textContent  = approvedCount;
+
+    const approvalRate = histData.length ? (approvedCount / histData.length) * 100 : 0;
+    const foodTotal = histData.reduce((sum, e) => sum + (e.food || 0), 0);
+    const plasticTotal = histData.reduce((sum, e) => sum + (e.plastic || 0), 0);
+    const otherTotal = histData.reduce((sum, e) => sum + (e.other || 0), 0);
+    const mixTotal = foodTotal + plasticTotal + otherTotal;
+    const foodPct = mixTotal ? (foodTotal / mixTotal) * 100 : 0;
+    const plasticPct = mixTotal ? (plasticTotal / mixTotal) * 100 : 0;
+    const otherPct = mixTotal ? (otherTotal / mixTotal) * 100 : 0;
+
+    document.getElementById('dash-approval-rate').textContent = `${approvalRate.toFixed(0)}%`;
+    document.getElementById('dash-approval-fill').style.width = `${approvalRate.toFixed(0)}%`;
+    document.getElementById('dash-food-fill').style.width = `${foodPct.toFixed(0)}%`;
+    document.getElementById('dash-plastic-fill').style.width = `${plasticPct.toFixed(0)}%`;
+    document.getElementById('dash-other-fill').style.width = `${otherPct.toFixed(0)}%`;
+    document.getElementById('dash-food-val').textContent = `${foodPct.toFixed(0)}%`;
+    document.getElementById('dash-plastic-val').textContent = `${plasticPct.toFixed(0)}%`;
+    document.getElementById('dash-other-val').textContent = `${otherPct.toFixed(0)}%`;
 
     const recentEl = document.getElementById('dash-recent');
     const recent = histData.slice(0, 3);
