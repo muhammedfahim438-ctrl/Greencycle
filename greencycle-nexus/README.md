@@ -1,7 +1,15 @@
-# GreenCycle Nexus — Run Instructions
+# GreenCycle Nexus
 
-## Folder Structure
-```
+A government-style waste management demo app with:
+- role-based login (`admin`, `citizen`, `worker`)
+- waste logging and approval workflow
+- payment tracking and pickup schedule
+- light/dark theme toggle
+- dashboard visualizations (approval rate and waste mix)
+
+## Project Structure
+
+```text
 greencycle-nexus/
 ├── backend/
 │   ├── app/
@@ -13,85 +21,86 @@ greencycle-nexus/
 └── app.html
 ```
 
----
+## Quick Start (Windows)
 
-## 1. Start the Backend
+### 1) Run backend
 
-```bash
-cd greencycle-nexus/backend
-
-# Create virtual env (recommended)
-python3 -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-
-# Install dependencies
+```powershell
+cd greencycle-nexus\backend
+python -m venv .venv
+.\.venv\Scripts\activate
 pip install -r requirements.txt
-
-# Run Flask
 python run.py
 ```
 
-Server starts at: **http://127.0.0.1:5000**
+Backend URL: `http://127.0.0.1:5000`
 
-The SQLite database (`greencycle.db`) is auto-created on first run.
-Three demo accounts are auto-seeded.
+Notes:
+- SQLite database is created automatically on first run.
+- Demo users are available immediately.
 
----
+### 2) Run frontend
 
-## 2. Open the Frontend
+You can use any one of these:
 
-Just open `app.html` in your browser — **no server needed**.
-
-```bash
-open greencycle-nexus/app.html       # macOS
-xdg-open greencycle-nexus/app.html   # Linux
-# Or double-click the file in Windows Explorer
-```
-
----
+1. Open file directly:
+   - Open `greencycle-nexus\app.html` in browser.
+2. Python static server:
+   ```powershell
+   cd ..   # back to greencycle-nexus
+   python -m http.server 5500
+   ```
+   then open `http://127.0.0.1:5500/app.html`
+3. Live Server extension in Cursor/VS Code:
+   - Right-click `app.html` -> Open with Live Server
 
 ## Demo Accounts
 
-| Role    | Phone      | PIN  |
-|---------|------------|------|
-| Admin   | 9000000001 | 1111 |
-| Citizen | 9000000002 | 2222 |
-| Worker  | 9000000003 | 3333 |
+| Role | Phone | PIN |
+|------|-------|-----|
+| Admin | `9000000001` | `1111` |
+| Citizen | `9000000002` | `2222` |
+| Worker | `9000000003` | `3333` |
 
----
+## Business Rules
 
-## Pricing Logic
+### Waste Pricing
 
-| Type    | Rate     |
-|---------|----------|
-| Food    | ₹2 / kg  |
-| Plastic | ₹3 / kg  |
-| Other   | ₹1 / kg  |
+| Type | Rate |
+|------|------|
+| Food | `₹2 / kg` |
+| Plastic | `₹3 / kg` |
+| Other | `₹1 / kg` |
 
-**Flow:** Citizen logs waste → Admin approves → Payment auto-generated (due in 7 days)
+### Workflow
 
----
+Citizen logs waste -> Admin approves entry -> Payment is auto-generated.
 
 ## API Endpoints
 
-| Method | Endpoint              | Auth     | Description              |
-|--------|-----------------------|----------|--------------------------|
-| POST   | /register             | —        | Create account           |
-| POST   | /login                | —        | Login, get token         |
-| POST   | /waste                | Bearer   | Log waste entry          |
-| GET    | /history/:user_id     | Bearer   | User's waste history     |
-| GET    | /pending              | Admin    | Unapproved entries       |
-| POST   | /approve/:id          | Admin    | Approve + create payment |
-| GET    | /payments/:user_id    | Bearer   | Payments + total due     |
-| GET    | /schedule/:user_id    | Bearer   | Pickup schedule          |
-| GET    | /pickups/:worker_id   | Bearer   | Worker's pickups         |
-| POST   | /collect/:id          | Bearer   | Mark pickup collected    |
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/register` | No | Register user |
+| POST | `/login` | No | Login and return token |
+| POST | `/waste` | Bearer | Log waste entry |
+| GET | `/history/:user_id` | Bearer | User waste history |
+| GET | `/pending` | Admin | Pending entries |
+| POST | `/approve/:id` | Admin | Approve entry and create payment |
+| GET | `/payments/:user_id` | Bearer | User payments and total due |
+| GET | `/schedule/:user_id` | Bearer | Pickup schedule |
+| GET | `/pickups/:worker_id` | Bearer | Worker pickups |
+| POST | `/collect/:id` | Bearer | Mark pickup as collected |
 
----
+## Tech Stack
 
-## Future Extensions
-- GPS tracking for workers
-- WhatsApp alerts via Twilio
-- Ward / zone mapping
-- OTP-based login
-- Payment gateway integration
+- Frontend: Single-page HTML/CSS/JS
+- Backend: Python + Flask
+- Database: SQLite
+- Auth: Bearer token (stored in localStorage)
+
+## Next Improvements
+
+- Add charts with timeline trends
+- Add filtering and export in history
+- Add OTP login and stronger auth controls
+- Add payment gateway integration
